@@ -6,15 +6,16 @@ let gameCount = 0;
 game();
 
 function game() {
-    while (gameCount < 5) {
+    while (compScore < 5 && playerScore < 5) {
         let userChoice = playerSelection();
         let compChoice = computerChoice();
         if(userChoice == 'rock' || userChoice == 'paper' || userChoice == 'scissors') {
             playRound(compChoice, userChoice);
+            console.log('You played ' + gameCount + ' games. The score is currently Computer - ' + compScore + ', Player - ' + playerScore);
         } else {
             alert('Pick rock, paper, or scissors ONLY.');
         }
-    }
+    } 
 }
 
 function playerSelection() {
@@ -41,11 +42,11 @@ function playRound(compPick, userPick) {
                     break;
                 case 'paper':
                     console.log('The computer picked rock. You win!');
-                    playerScore++;
+                    ++playerScore;
                     break;
                 case 'scissors':
                     console.log('The computer picked rock. You lose!');
-                    compScore++;
+                    ++compScore;
                     break;
             }
             gameCount++;
@@ -55,14 +56,14 @@ function playRound(compPick, userPick) {
             switch(userPick) {
                 case 'rock':
                     console.log('The computer picked paper. You lose!');
-                    compScore++;
+                    ++compScore;
                     break;
                 case 'paper':
                     console.log('It is a tie!');
                     break;
                 case 'scissors':
                     console.log('The computer picked paper. You win!');
-                    playerScore++;
+                    ++playerScore;
                     break;
             }
             gameCount++;
@@ -72,11 +73,11 @@ function playRound(compPick, userPick) {
             switch(userPick) {
                 case 'rock':
                     console.log('The computer picked scissors. You win!');
-                    playerScore++;
+                    ++playerScore;
                     break;
                 case 'paper':
                     console.log('The computer picked scissors. You lose!');
-                    compScore++;
+                    ++compScore;
                     break;
                 case 'scissors':
                     console.log('It is a tie!')
@@ -85,5 +86,5 @@ function playRound(compPick, userPick) {
             gameCount++;
             break;
     }
-    console.log('You played ' + gameCount + ' games. The score is currently Computer - ' + compScore + ', Player - ' + playerScore);
+    
 }
