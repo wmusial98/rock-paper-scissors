@@ -87,4 +87,4 @@ function scoreUpdate() {
     yourScore.textContent = playerScore;
     rightScore.appendChild(yourScore);
     leftScore.appendChild(oppoScore);
-    }
+}
