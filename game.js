@@ -24,27 +24,31 @@ yourScore.textContent = '0';
 rightScore.appendChild(yourScore);
 leftScore.appendChild(oppoScore);
 
+const endMess = document.querySelector('.result');
+
+const gameBegin = document.querySelector('.result');
+
 function playRound(e) {
     let userPick = this.classList.value;
     let compPick = computerChoice();
     console.log(userPick, compPick);
 
-    if(userPick === compPick) {
+    if (userPick === compPick) {
         resultMessage('tie');
     } else if (userPick === 'rock') {
-        if(compPick === 'paper') {
+        if (compPick === 'paper') {
             resultMessage('loss');
         } else {
             resultMessage('win');
         }
     } else if (userPick === 'paper') {
-        if(compPick === 'rock') {
+        if (compPick === 'rock') {
             resultMessage('win');
         } else {
             resultMessage('loss');
         }
     } else if (userPick === 'scissors') {
-        if(compPick === 'paper') {
+        if (compPick === 'paper') {
             resultMessage('win');
         } else {
             resultMessage('loss');
@@ -55,30 +59,42 @@ function playRound(e) {
 buttons.forEach(button => button.addEventListener('click', playRound));
 
 function computerChoice() {
-    return compOptions[Math.floor(Math.random()*compOptions.length)];
+    return compOptions[Math.floor(Math.random() * compOptions.length)];
 }
 
 function resultMessage(resultMsg) {
-    gameCount++;
-    if(resultMsg === 'win') {
-        playerScore++;
-        resContent.textContent = 'You win!';
-        scoreUpdate();
-        textUpdate();
-    } else if (resultMsg === 'loss') {
-        compScore++;
-        resContent.textContent = 'You lose!';
-        scoreUpdate();
-        textUpdate();
-    } else if (resultMsg === 'tie') {
-        resContent.textContent = 'You tied!';
-        textUpdate();
-    } 
+    ++gameCount;
+    if (compScore > 4 || playerScore > 4) {
+        if (compScore > playerScore) {
+            gameReset('The computer wins!');
+        } else {
+            gameReset('Congratulations! You win :)');
+        }
+    } else {
+        if (resultMsg === 'win') {
+            playerScore++;
+            resContent.textContent = 'You win!';
+            scoreUpdate();
+            textUpdate();
+        } else if (resultMsg === 'loss') {
+            compScore++;
+            resContent.textContent = 'You lose!';
+            scoreUpdate();
+            textUpdate();
+        } else if (resultMsg === 'tie') {
+            resContent.textContent = 'You tied!';
+            textUpdate();
+        }
+    }
 }
 
 function textUpdate() {
-    gameCounter.textContent = 'You played ' + gameCount + ' games!';
     msgContainer.appendChild(resContent);
+    gameCtUpdate();
+}
+
+function gameCtUpdate() {
+    gameCounter.textContent = 'You played ' + gameCount + ' games!';
     msgContainer.appendChild(gameCounter);
 }
 
@@ -87,4 +103,37 @@ function scoreUpdate() {
     yourScore.textContent = playerScore;
     rightScore.appendChild(yourScore);
     leftScore.appendChild(oppoScore);
+}
+
+function gameReset(endMessage) {
+    const finalMess = document.createElement('p');
+    finalMess.textContent = endMessage;
+    endMess.appendChild(finalMess);
+    buttons.forEach(button => button.removeEventListener('click', playRound, false));
+    gameCtUpdate();
+    gameStart();
+}
+
+function gameStart() {
+    const gameButton = document.createElement('button');
+    gameButton.classList.add('gameButton');
+    gameButton.textContent = 'Restart Game';
+    gameBegin.appendChild(gameButton);
+    gameButton.addEventListener('click', zeroSet);
+}
+
+function zeroSet(e) {
+    removeAllChildNodes(msgContainer);
+    removeAllChildNodes(endMess);
+    removeAllChildNodes(gameBegin);
+    playerScore = 0;
+    compScore = 0;
+    gameCount = 0;
+    buttons.forEach(button => button.addEventListener('click', playRound));
+}
+
+function removeAllChildNodes(parent) {
+    while(parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
 }
