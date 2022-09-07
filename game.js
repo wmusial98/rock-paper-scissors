@@ -5,13 +5,24 @@ let compOptions = Array('rock', 'paper', 'scissors');
 let gameCount = 0;
 const buttons = document.querySelectorAll('button');
 
-const msgContainer = document.querySelector('#result');
+const msgContainer = document.querySelector('.result');
 const resContent = document.createElement('p');
 resContent.classList.add('resContent');
 resContent.textContent = '';
 const gameCounter = document.createElement('p');
 gameCounter.classList.add('gameCounter');
 gameCounter.textContent = '';
+
+const rightScore = document.querySelector('.rightScore');
+const leftScore = document.querySelector('.leftScore');
+const oppoScore = document.createElement('div');
+const yourScore = document.createElement('div');
+oppoScore.classList.add('oppoScore');
+yourScore.classList.add('yourScore');
+oppoScore.textContent = '0';
+yourScore.textContent = '0';
+rightScore.appendChild(yourScore);
+leftScore.appendChild(oppoScore);
 
 function playRound(e) {
     let userPick = this.classList.value;
@@ -48,27 +59,32 @@ function computerChoice() {
 }
 
 function resultMessage(resultMsg) {
+    gameCount++;
     if(resultMsg === 'win') {
-        console.log('win');
+        playerScore++;
+        resContent.textContent = 'You win!';
+        scoreUpdate();
+        textUpdate();
     } else if (resultMsg === 'loss') {
-        console.log('loss');
+        compScore++;
+        resContent.textContent = 'You lose!';
+        scoreUpdate();
+        textUpdate();
     } else if (resultMsg === 'tie') {
-        console.log('tie'); 
+        resContent.textContent = 'You tied!';
+        textUpdate();
     } 
 }
 
-/* game();
-
-function game() {
-    let userChoice = playerSelection();
-    console.log(userChoice);
-    let compChoice = computerChoice();
-    console.log(userChoice + compChoice);
-    playRound(compChoice, userChoice);
-    console.log('You played ' + gameCount +
-        ' games. The score is currently Computer - ' + compScore +
-        ', Player - ' + playerScore);
+function textUpdate() {
+    gameCounter.textContent = 'You played ' + gameCount + ' games!';
+    msgContainer.appendChild(resContent);
+    msgContainer.appendChild(gameCounter);
 }
-function logText(e) {
-    console.log(this.classList.value);
-} */
+
+function scoreUpdate() {
+    oppoScore.textContent = compScore;
+    yourScore.textContent = playerScore;
+    rightScore.appendChild(yourScore);
+    leftScore.appendChild(oppoScore);
+    }
