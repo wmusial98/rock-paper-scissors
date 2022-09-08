@@ -35,29 +35,37 @@ const endMess = document.querySelector('.result');
 const gameBegin = document.querySelector('.result');
 
 function playRound(e) {
-    let userPick = this.classList.value;
-    let compPick = computerChoice();
-    updateImages(compPick, userPick);
+    if (compScore == 5 || playerScore == 5) {
+        if (compScore > playerScore) {
+            gameReset('The computer wins!');
+        } else {
+            gameReset('Congratulations! You win :)');
+        }
+    } else {
+        let userPick = this.classList.value;
+        let compPick = computerChoice();
+        updateImages(compPick, userPick);
 
-    if (userPick === compPick) {
-        resultMessage('tie');
-    } else if (userPick === 'rock') {
-        if (compPick === 'paper') {
-            resultMessage('loss');
-        } else {
-            resultMessage('win');
-        }
-    } else if (userPick === 'paper') {
-        if (compPick === 'rock') {
-            resultMessage('win');
-        } else {
-            resultMessage('loss');
-        }
-    } else if (userPick === 'scissors') {
-        if (compPick === 'paper') {
-            resultMessage('win');
-        } else {
-            resultMessage('loss');
+        if (userPick === compPick) {
+            resultMessage('tie');
+        } else if (userPick === 'rock') {
+            if (compPick === 'paper') {
+                resultMessage('loss');
+            } else {
+                resultMessage('win');
+            }
+        } else if (userPick === 'paper') {
+            if (compPick === 'rock') {
+                resultMessage('win');
+            } else {
+                resultMessage('loss');
+            }
+        } else if (userPick === 'scissors') {
+            if (compPick === 'paper') {
+                resultMessage('win');
+            } else {
+                resultMessage('loss');
+            }
         }
     }
 }
@@ -76,30 +84,35 @@ function updateImages(compPick, userPick) {
 }
 
 function resultMessage(resultMsg) {
-    ++gameCount;
-    if (compScore > 4 || playerScore > 4) {
+    if (resultMsg === 'win') {
+        playerScore++;
+        resContent.textContent = 'You win!';
+        scoreUpdate();
+        textUpdate();
+        endCheck();
+    } else if (resultMsg === 'loss') {
+        compScore++;
+        resContent.textContent = 'You lose!';
+        scoreUpdate();
+        textUpdate();
+        endCheck();
+    } else if (resultMsg === 'tie') {
+        resContent.textContent = 'You tied!';
+        textUpdate();
+        endCheck();
+    }
+}
+
+function endCheck() {
+    if (compScore == 5 || playerScore == 5) {
         if (compScore > playerScore) {
             gameReset('The computer wins!');
         } else {
             gameReset('Congratulations! You win :)');
         }
-    } else {
-        if (resultMsg === 'win') {
-            playerScore++;
-            resContent.textContent = 'You win!';
-            scoreUpdate();
-            textUpdate();
-        } else if (resultMsg === 'loss') {
-            compScore++;
-            resContent.textContent = 'You lose!';
-            scoreUpdate();
-            textUpdate();
-        } else if (resultMsg === 'tie') {
-            resContent.textContent = 'You tied!';
-            textUpdate();
-        }
     }
 }
+
 
 function textUpdate() {
     msgContainer.appendChild(resContent);
@@ -107,6 +120,7 @@ function textUpdate() {
 }
 
 function gameCtUpdate() {
+    ++gameCount;
     gameCounter.textContent = 'You played ' + gameCount + ' games!';
     msgContainer.appendChild(gameCounter);
 }
@@ -123,11 +137,11 @@ function gameReset(endMessage) {
     finalMess.textContent = endMessage;
     endMess.appendChild(finalMess);
     buttons.forEach(button => button.removeEventListener('click', playRound, false));
-    gameCtUpdate();
     gameStart();
 }
 
 function gameStart() {
+    gameCtUpdate();
     const gameButton = document.createElement('button');
     gameButton.classList.add('gameButton');
     gameButton.textContent = 'Restart Game';
@@ -141,13 +155,13 @@ function zeroSet(e) {
     removeAllChildNodes(gameBegin);
     playerScore = 0;
     compScore = 0;
-    gameCount = 0;
+    gameCount = 1;
     scoreUpdate();
     buttons.forEach(button => button.addEventListener('click', playRound));
 }
 
 function removeAllChildNodes(parent) {
-    while(parent.firstChild) {
+    while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
     }
 }
