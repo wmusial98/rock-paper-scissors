@@ -5,6 +5,12 @@ let compOptions = Array('rock', 'paper', 'scissors');
 let gameCount = 0;
 const buttons = document.querySelectorAll('button');
 
+const playBoard = document.querySelector('.playboard');
+const compImg = document.createElement('img');
+const playerImg = document.createElement('img');
+compImg.classList.add('playImg');
+playerImg.classList.add('playImg');
+
 const msgContainer = document.querySelector('.result');
 const resContent = document.createElement('p');
 resContent.classList.add('resContent');
@@ -31,7 +37,7 @@ const gameBegin = document.querySelector('.result');
 function playRound(e) {
     let userPick = this.classList.value;
     let compPick = computerChoice();
-    console.log(userPick, compPick);
+    updateImages(compPick, userPick);
 
     if (userPick === compPick) {
         resultMessage('tie');
@@ -60,6 +66,13 @@ buttons.forEach(button => button.addEventListener('click', playRound));
 
 function computerChoice() {
     return compOptions[Math.floor(Math.random() * compOptions.length)];
+}
+
+function updateImages(compPick, userPick) {
+    compImg.src = './img/compimg/' + compPick + '.jpg';
+    playerImg.src = './img/' + userPick + '.jpg';
+    playBoard.appendChild(compImg);
+    playBoard.appendChild(playerImg);
 }
 
 function resultMessage(resultMsg) {
@@ -129,6 +142,7 @@ function zeroSet(e) {
     playerScore = 0;
     compScore = 0;
     gameCount = 0;
+    scoreUpdate();
     buttons.forEach(button => button.addEventListener('click', playRound));
 }
 

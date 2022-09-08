@@ -10,26 +10,25 @@
 </head>
 
 <body>
+    <p class="title">PICK ROCK PAPER OR SCISSORS</p>
     <div class="buttons">
-        <button class="rock">rock</button>
-        <button class="paper">paper</button>
-        <button class="scissors">scissors</button>
+        <button class="rock"><img src="./img/rock.jpg"></button>
+        <button class="paper"><img src="./img/paper.jpg"></button>
+        <button class="scissors"><img src="./img/scissors.jpg"></button>
     </div>
     
-    <ul>
+    <div class="display">
         <div class="leftSide">
-            <li><div class="leftScore"></div></li>
-            <li><p>COMPUTER</p></li>
+            <div class="leftScore"></div>
+            <p>COMPUTER</p>
         </div>
-        <div class="resultDisplay">
-            <li>computer choice</li>
-            <li>player choice</li>
-        </div>
+        <div class="playboard"></div>
         <div class="rightSide">
-            <li><div class="rightScore"></div></li>
-            <li><p>PLAYER</p></li>
+            <div class="rightScore"></div>
+            <p>PLAYER</p>
         </div>
-    </ul>
+    </div>
+
     <div class="result"></div>
 
     <script src="game.js"></script>
