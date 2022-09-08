@@ -1,0 +1,78 @@
+html {
+    max-width: 800px;
+    margin: 100px auto;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+img {
+    height: 200px;
+    width: 200px;
+}
+
+button {
+    border: none;
+    font-size: 24px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.title {
+    margin: 10px;
+    align-self: center;
+    font-size: 36px;
+}
+
+.gameButton {
+    border: 1px solid;
+}
+
+.display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.display p, .display div {
+    font-size: 24px;
+}
+
+.playboard {
+    display: flex;
+}
+
+.playImg {
+    height: 150px;
+    width: 150px;
+}
+
+.buttons{
+    padding: 50px;
+    margin: auto;
+}
+
+.rightSide, .leftSide {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+} 
+
+/* .rightSide {
+    margin-left: auto;
+} */
+
+.result {
+    align-self: center;
+    font-size: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.resContent {
+    margin: 10px;
+}
